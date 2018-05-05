@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{274D7F4B-B
 		data\pride-and-prejudice-input.txt = data\pride-and-prejudice-input.txt
 		data\stop_words.txt = data\stop_words.txt
 		data\test.txt = data\test.txt
+		data\times_time.txt = data\times_time.txt
 	EndProjectSection
 EndProject
 Global
