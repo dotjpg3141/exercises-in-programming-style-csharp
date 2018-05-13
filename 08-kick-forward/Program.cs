@@ -26,13 +26,13 @@ namespace _08_kick_forward
 				{
 					NormalizeWords(words, () =>
 					{
-						ReadFile(args[2], stopWordText =>
+						ReadFile(args[1], stopWordText =>
 						{
 							FindWords(stopWordText, stopwWords =>
 							{
 								FilterWords(words, stopwWords, filteredWords =>
 								{
-									CountWords(filteredWords, freqeuncies => PrintWords(freqeuncies, args[1]));
+									CountWords(filteredWords, freqeuncies => PrintWords(freqeuncies));
 								});
 							});
 						});
@@ -92,16 +92,13 @@ namespace _08_kick_forward
 			callback(frequencies);
 		}
 
-		private static void PrintWords(Dictionary<string, int> words, string path)
+		private static void PrintWords(Dictionary<string, int> words)
 		{
 			var top = words.OrderByDescending(kvp => kvp.Value).Take(25);
 
-			using (var writer = new StreamWriter(path))
+			foreach (var kvp in top)
 			{
-				foreach (var kvp in top)
-				{
-					writer.WriteLine(kvp.Key + "  -  " + kvp.Value);
-				}
+				Console.WriteLine(kvp.Key + "  -  " + kvp.Value);
 			}
 		}
 	}

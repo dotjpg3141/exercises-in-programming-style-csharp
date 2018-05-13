@@ -41,7 +41,7 @@ namespace _01_good_old_times
 			data[3] = 0;    // words count
 
 			// NOTE(jpg): read stop words
-			using (var stopWords = new FileStream(args[2], FileMode.Open))
+			using (var stopWords = new FileStream(args[1], FileMode.Open))
 			{
 				while (true)
 				{
@@ -165,59 +165,55 @@ namespace _01_good_old_times
 					}
 				}
 
-				using (var outputFs = new FileStream(args[1], FileMode.Create))
-				using (var output = new StreamWriter(outputFs))
+				////NOTE(jpg): print word frequencys
+				//for (data[8] = 0; data[8] < data[3]; data[8]++)
+				//{
+				//	Console.Write(Read(16 * data[8]));
+				//	Console.Write(": ");
+
+				//	// foreach character in word
+				//	for (data[9] = 0; data[9] < 15; data[9]++)
+				//	{
+				//		if (Read(1 + data[9] + 16 * data[8]) == 0) break;
+				//		Console.Write((char)Read(1 + data[9] + 16 * data[8]));
+				//	}
+				//	Console.WriteLine();
+				//}
+
+				data[2] = int.MaxValue; // last printed word
+				data[7] = int.MaxValue; // max count required
+
+				// NOTE(jpg): print N=25 words with most count
+				for (data[10] = 0; data[10] < 25 && data[10] < data[3]; data[10]++)
 				{
-					////NOTE(jpg): print word frequencys
-					//for (data[8] = 0; data[8] < data[3]; data[8]++)
-					//{
-					//	output.Write(Read(16 * data[8]));
-					//	output.Write(": ");
+					data[4] = 0; // current best word
+					data[5] = 0; // current count
+					data[6] = 0; // min count required
 
-					//	// foreach character in word
-					//	for (data[9] = 0; data[9] < 15; data[9]++)
-					//	{
-					//		if (Read(1 + data[9] + 16 * data[8]) == 0) break;
-					//		output.Write((char)Read(1 + data[9] + 16 * data[8]));
-					//	}
-					//	output.WriteLine();
-					//}
-
-					data[2] = int.MaxValue; // last printed word
-					data[7] = int.MaxValue; // max count required
-
-					// NOTE(jpg): print N=25 words with most count
-					for (data[10] = 0; data[10] < 25 && data[10] < data[3]; data[10]++)
+					for (data[8] = 0; data[8] < data[3]; data[8]++)
 					{
-						data[4] = 0; // current best word
-						data[5] = 0; // current count
-						data[6] = 0; // min count required
+						data[5] = Read(16 * data[8]);
 
-						for (data[8] = 0; data[8] < data[3]; data[8]++)
+						if (data[6] < data[5] && (data[5] < data[7] || (data[5] == data[7] && data[8] > data[2])))
 						{
-							data[5] = Read(16 * data[8]);
-
-							if (data[6] < data[5] && (data[5] < data[7] || (data[5] == data[7] && data[8] > data[2])))
-							{
-								data[6] = data[5];
-								data[4] = data[8];
-							}
+							data[6] = data[5];
+							data[4] = data[8];
 						}
-
-						// foreach character in word
-						for (data[9] = 0; data[9] < 15; data[9]++)
-						{
-							if (Read(1 + data[9] + 16 * data[4]) == 0) break;
-							output.Write((char)Read(1 + data[9] + 16 * data[4]));
-						}
-
-						output.Write("  -  ");
-						output.Write(Read(16 * data[4]));
-						output.WriteLine();
-
-						data[2] = data[4];
-						data[7] = data[6];
 					}
+
+					// foreach character in word
+					for (data[9] = 0; data[9] < 15; data[9]++)
+					{
+						if (Read(1 + data[9] + 16 * data[4]) == 0) break;
+						Console.Write((char)Read(1 + data[9] + 16 * data[4]));
+					}
+
+					Console.Write("  -  ");
+					Console.Write(Read(16 * data[4]));
+					Console.WriteLine();
+
+					data[2] = data[4];
+					data[7] = data[6];
 				}
 			}
 		}

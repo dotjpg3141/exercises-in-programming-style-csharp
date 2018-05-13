@@ -20,7 +20,7 @@ namespace _09_the_one
 				Particularly for The One style, the bind operation simply calls the given function, giving it the value that it holds, and holds on to the returned value.
 			 */
 
-			var stopWords = new TheOne<string>(args[2])
+			var stopWords = new TheOne<string>(args[1])
 				.Bind(ReadText)
 				.Bind(TokenizeWords)
 				.Unwrap();
@@ -34,7 +34,7 @@ namespace _09_the_one
 				.Bind(LimitWords)
 				.Unwrap();
 
-			PrintResult(frequencies, args[1]);
+			PrintResult(frequencies);
 		}
 
 		static string ReadText(string path)
@@ -82,14 +82,11 @@ namespace _09_the_one
 			return words.OrderByDescending(kvp => kvp.Value).Take(25).ToArray();
 		}
 
-		private static void PrintResult(KeyValuePair<string, int>[] frequencies, string path)
+		private static void PrintResult(KeyValuePair<string, int>[] frequencies)
 		{
-			using (var writer = new StreamWriter(path))
+			foreach (var kvp in frequencies)
 			{
-				foreach (var kvp in frequencies)
-				{
-					writer.WriteLine(kvp.Key + "  -  " + kvp.Value);
-				}
+				Console.WriteLine(kvp.Key + "  -  " + kvp.Value);
 			}
 		}
 	}

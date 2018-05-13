@@ -38,13 +38,12 @@ namespace _02_go_forth
 			ReadFile();
 			TokenizeWords();
 
-			Push(args[2]);
+			Push(args[1]);
 			ReadFile();
 			TokenizeStopWords();
 
 			FrequencyCount();
 			FrequencyCountList();
-			Push(args[1]);
 			PrintFrequencies();
 
 			Console.WriteLine(string.Join("\n", Stack));
@@ -131,17 +130,13 @@ namespace _02_go_forth
 
 		static void PrintFrequencies()
 		{
-			using (var outputFs = new FileStream(Pop<string>(), FileMode.Create))
-			using (var output = new StreamWriter(outputFs))
+			while (Stack.Count != 0)
 			{
-				while (Stack.Count != 0)
-				{
-					Dup();
-					output.Write(Pop<KeyValuePair<string, int>>().Key);
-					output.Write("  -  ");
-					output.Write(Pop<KeyValuePair<string, int>>().Value);
-					output.WriteLine();
-				}
+				Dup();
+				Console.Write(Pop<KeyValuePair<string, int>>().Key);
+				Console.Write("  -  ");
+				Console.Write(Pop<KeyValuePair<string, int>>().Value);
+				Console.WriteLine();
 			}
 		}
 

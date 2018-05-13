@@ -18,7 +18,7 @@ namespace _05_pipeline
 				Larger problem solved as a pipeline of function applications
 			 */
 
-			PrintFrequencies(args[1], CountWordFrequencies(FilterStopWords(args[2], NormalizeWords(ExtractWords(ReadFile(args[0]))))));
+			PrintFrequencies(CountWordFrequencies(FilterStopWords(args[1], NormalizeWords(ExtractWords(ReadFile(args[0]))))));
 		}
 
 		private static string ReadFile(string path)
@@ -53,14 +53,11 @@ namespace _05_pipeline
 			return result;
 		}
 
-		private static void PrintFrequencies(string path, Dictionary<string, int> wordFrequencies)
+		private static void PrintFrequencies(Dictionary<string, int> wordFrequencies)
 		{
-			using (var output = new StreamWriter(path))
+			foreach (var frequencies in wordFrequencies.OrderByDescending(w => w.Value).Take(25))
 			{
-				foreach (var frequencies in wordFrequencies.OrderByDescending(w => w.Value).Take(25))
-				{
-					output.WriteLine(frequencies.Key + "  -  " + frequencies.Value);
-				}
+				Console.WriteLine(frequencies.Key + "  -  " + frequencies.Value);
 			}
 		}
 	}

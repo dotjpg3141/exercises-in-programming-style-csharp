@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace _04_cookbook
 {
@@ -25,11 +23,11 @@ namespace _04_cookbook
 			ReadWords(args[0]);
 			NormalizeWords();
 
-			ReadStopWords(args[2]);
+			ReadStopWords(args[1]);
 			RemoveStopWordsAndSmallWords();
 
 			CountWords();
-			PrintResult(args[1]);
+			PrintResult();
 		}
 
 		static void ReadWords(string path)
@@ -75,15 +73,12 @@ namespace _04_cookbook
 			}
 		}
 
-		static void PrintResult(string path)
+		static void PrintResult()
 		{
 			var topWords = wordFrequencies.OrderByDescending(kvp => kvp.Value).Take(25);
-			using (var output = new StreamWriter(path))
+			foreach (var kvp in topWords)
 			{
-				foreach (var kvp in topWords)
-				{
-					output.WriteLine(kvp.Key + "  -  " + kvp.Value);
-				}
+				Console.WriteLine(kvp.Key + "  -  " + kvp.Value);
 			}
 		}
 	}

@@ -27,13 +27,12 @@ namespace _07_infinite_mirror
 		static void Run(string[] args)
 		{
 			var words = TokenizeWordFile(args[0]);
-			var stopWords = new HashSet<string>(TokenizeWordFile(args[2]));
+			var stopWords = new HashSet<string>(TokenizeWordFile(args[1]));
 
 			var frequencies = CountFrequencies(words, stopWords).ToArray();
 			Sort(frequencies, (a, b) => b.Value - a.Value);
 
-			using (var writer = new StreamWriter(args[1]))
-				PrintFrequencies(frequencies, writer, 25);
+			PrintFrequencies(frequencies, 25);
 		}
 
 		static string[] TokenizeWordFile(string inputPath)
@@ -88,7 +87,7 @@ namespace _07_infinite_mirror
 			}
 		}
 
-		static void PrintFrequencies(KeyValuePair<string, int>[] frequencies, StreamWriter writer, int count)
+		static void PrintFrequencies(KeyValuePair<string, int>[] frequencies, int count)
 		{
 			if (count == 0)
 			{
@@ -96,8 +95,8 @@ namespace _07_infinite_mirror
 			}
 			else
 			{
-				PrintFrequencies(frequencies, writer, count - 1);
-				writer.WriteLine(frequencies[count - 1].Key + "  -  " + frequencies[count - 1].Value);
+				PrintFrequencies(frequencies, count - 1);
+				Console.WriteLine(frequencies[count - 1].Key + "  -  " + frequencies[count - 1].Value);
 			}
 		}
 	}

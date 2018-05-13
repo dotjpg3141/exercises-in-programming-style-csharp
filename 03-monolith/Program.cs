@@ -18,8 +18,7 @@ namespace _03_monolith
 			 */
 
 			var inputPath = args[0];
-			var outputPath = args[1];
-			var stopWordPath = args[2];
+			var stopWordPath = args[1];
 
 			var stopWords = File.ReadAllText(stopWordPath).Split(',');
 
@@ -95,12 +94,9 @@ namespace _03_monolith
 					}
 				}
 
-				using (var output = new StreamWriter(outputPath))
+				for (int i = 0; i < 25; i++)
 				{
-					for (int i = 0; i < 25; i++)
-					{
-						output.WriteLine(wordCount[i].word + "  -  " + wordCount[i].count);
-					}
+					Console.WriteLine(wordCount[i].word + "  -  " + wordCount[i].count);
 				}
 			}
 		}
